@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mastery Workshop — 1.5hr Complete Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { heading: ['Space Grotesk','sans-serif'], body: ['Inter','sans-serif'] },
+                    colors: { brand:'#FF006E','brand-hover':'#E60063','brand-purple':'#6B2D8F', dark:{900:'#0A0A0A',800:'#050505',700:'#0F0F0F',600:'#111111',500:'#1A1A1A',400:'#222222'} }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root{--font-heading:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:var(--font-body);background:#0A0A0A;color:#fff;overflow:hidden;height:100vh}
+        ::selection{background:#FF006E;color:#fff}
+        .slide{display:none;width:100%;height:100vh;overflow-y:auto;scrollbar-width:thin;scrollbar-color:rgba(255,0,110,.3) transparent}
+        .slide::-webkit-scrollbar{width:4px}
+        .slide::-webkit-scrollbar-thumb{background:rgba(255,0,110,.3);border-radius:4px}
+        .slide.active{display:flex}
+        .slide-enter{animation:slideIn .5s cubic-bezier(.16,1,.3,1) forwards}
+        @keyframes slideIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+        .brand-gradient{background:linear-gradient(135deg,#FF006E,#FF4D8F)}
+        .purple-gradient{background:linear-gradient(135deg,#6B2D8F,#FF006E)}
+        .glow-text{text-shadow:0 0 40px rgba(255,0,110,.3)}
+        .grid-bg{background-size:40px 40px;background-image:linear-gradient(to right,rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.03) 1px,transparent 1px);mask-image:linear-gradient(to bottom,transparent,black 20%,black 80%,transparent)}
+        .step-card{position:relative;padding-left:2.75rem}
+        .step-card::before{content:attr(data-step);position:absolute;left:0;top:0;width:1.75rem;height:1.75rem;border-radius:50%;background:linear-gradient(135deg,#FF006E,#FF4D8F);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700}
+        .step-line{position:absolute;left:.82rem;top:2.25rem;bottom:-.75rem;width:2px;background:rgba(255,0,110,.2)}
+        .step-card:last-child .step-line{display:none}
+        .img-guide{border:1px solid rgba(255,255,255,.1);border-radius:1rem;overflow:hidden;position:relative}
+        .img-guide .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85),transparent 60%)}
+        .img-guide .badge{position:absolute;top:.6rem;right:.6rem;background:rgba(255,0,110,.9);padding:.2rem .6rem;border-radius:9999px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em}
+        .img-guide .step-label{position:absolute;bottom:.6rem;left:.6rem;font-size:.7rem;font-weight:500;color:rgba(255,255,255,.9)}
+        .tag{display:inline-flex;align-items:center;gap:.3rem;padding:.25rem .65rem;border-radius:9999px;font-size:.65rem;font-weight:600;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05)}
+        .tag-brand{border-color:rgba(255,0,110,.3);background:rgba(255,0,110,.1);color:#FF006E}
+        .tag-purple{border-color:rgba(107,45,143,.3);background:rgba(107,45,143,.1);color:#c084fc}
+        .tag-green{border-color:rgba(16,185,129,.3);background:rgba(16,185,129,.1);color:#10b981}
+        .tag-blue{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.1);color:#60a5fa}
+        .tag-yellow{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.1);color:#fbbf24}
+        .mini-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:1rem;padding:1.25rem;transition:all .3s}
+        .mini-card:hover{border-color:rgba(255,0,110,.3);background:rgba(255,255,255,.05);box-shadow:0 0 30px rgba(255,0,110,.05)}
+        .progress-bar{height:3px;background:rgba(255,255,255,.05);position:fixed;top:0;left:0;right:0;z-index:100}
+        .progress-fill{height:100%;background:linear-gradient(to right,#FF006E,#6B2D8F);transition:width .5s cubic-bezier(.16,1,.3,1)}
+        .nav-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.15);cursor:pointer;transition:all .3s}
+        .nav-dot.active{background:#FF006E;box-shadow:0 0 10px rgba(255,0,110,.5);transform:scale(1.4)}
+        .nav-dot:hover{background:rgba(255,255,255,.4)}
+        .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:#1A1A1A;border:1px solid rgba(255,255,255,.1);padding:.6rem 1.2rem;border-radius:1rem;font-size:.75rem;z-index:999;transition:transform .4s cubic-bezier(.16,1,.3,1);pointer-events:none}
+        .toast.show{transform:translateX(-50%) translateY(0)}
+        .comparison-row:hover{background:rgba(255,0,110,.05)}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+        .float{animation:float 3s ease-in-out infinite}
+        .section-tag{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:9999px;font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.15em;border:1px solid rgba(255,0,110,.3);background:rgba(255,0,110,.08);color:#FF006E}
+        .highlight-box{border-left:3px solid #FF006E;background:rgba(255,0,110,.05);padding:1rem 1.25rem;border-radius:0 .75rem .75rem 0}
+        .screenshot-frame{border:2px solid rgba(255,255,255,.1);border-radius:.75rem;overflow:hidden;position:relative;background:#111}
+        .screenshot-frame .title-bar{display:flex;align-items:center;gap:.4rem;padding:.5rem .75rem;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.05)}
+        .screenshot-frame .dot{width:.5rem;height:.5rem;border-radius:50%}
+        .prompt-example{background:#050505;border:1px solid rgba(255,255,255,.1);border-radius:.75rem;padding:1rem;font-size:.8rem;line-height:1.6}
+        .prompt-example .label{font-size:.6rem;text-transform:uppercase;letter-spacing:.15em;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+        .arrow-flow{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap}
+        .arrow-flow .node{padding:.4rem .8rem;border-radius:.5rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:.7rem;font-weight:500}
+        .arrow-flow .arrow{color:#FF006E;font-size:.8rem}
+    </style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<nav class="fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-4 md:px-6" style="background:rgba(10,10,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05)">
+    <div class="flex items-center gap-2.5">
+        <div class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center"><i data-lucide="brain" class="w-3.5 h-3.5 text-white"></i></div>
+        <span class="font-heading font-bold text-xs tracking-tight hidden sm:block">AI MASTERY</span>
+        <span class="text-[0.65rem] text-zinc-500 ml-1" id="slideCounter">01 / 30</span>
+    </div>
+    <div class="hidden md:flex items-center gap-1.5" id="navDots"></div>
+    <div class="flex items-center gap-2">
+        <button onclick="prevSlide()" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors"><i data-lucide="chevron-left" class="w-3.5 h-3.5"></i></button>
+        <button onclick="nextSlide()" class="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:border-white/30 transition-colors"><i data-lucide="chevron-right" class="w-3.5 h-3.5"></i></button>
+        <button onclick="toggleFS()" class="w-8 h-8 rounded-full border border-white/10 items-center justify-center hover:border-white/30 transition-colors hidden md:flex"><i data-lucide="maximize-2" class="w-3.5 h-3.5"></i></button>
+    </div>
+</nav>
+
+<div class="toast" id="toast">Press ← → arrow keys to navigate · F for fullscreen</div>
+
+<!-- SLIDE 0: TITLE -->
+<div class="slide active" id="s0">
+    <div class="relative w-full h-full flex items-center justify-center">
+        <div class="absolute inset-0 grid-bg"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full" style="background:radial-gradient(circle,rgba(255,0,110,.08) 0%,transparent 70%)"></div>
+        <div class="relative z-10 text-center px-6 slide-enter">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5 mb-6"><span class="w-1.5 h-1.5 rounded-full bg-green-500"></span><span class="text-[0.65rem] font-medium text-zinc-400">1.5 Hour Complete Workshop</span></div>
+            <h1 class="font-heading text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight leading-[.9] mb-5 glow-text">Mastering<br><span style="background:linear-gradient(135deg,#FF006E,#c084fc);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Artificial Intelligence</span></h1>
+            <p class="text-base md:text-lg font-light text-zinc-400 max-w-xl mx-auto mb-8 leading-relaxed">From AI fundamentals to prompt engineering, image/audio/video generation, and premium AI tools</p>
+            <div class="flex flex-wrap justify-center gap-2 mb-10">
+                <span class="tag tag-brand"><i data-lucide="cpu" class="w-2.5 h-2.5"></i>AI / ML / NLP</span>
+                <span class="tag tag-purple"><i data-lucide="message-square" class="w-2.5 h-2.5"></i>ChatGPT & Gemini</span>
+                <span class="tag tag-green"><i data-lucide="pen-tool" class="w-2.5 h-2.5"></i>Content</span>
+                <span class="tag tag-blue"><i data-lucide="image" class="w-2.5 h-2.5"></i>Image/Audio/Video</span>
+                <span class="tag tag-yellow"><i data-lucide="crown" class="w-2.5 h-2.5"></i>Premium</span>
+            </div>
+            <button onclick="goTo(1)" class="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-brand hover:bg-brand-hover text-white text-sm font-bold transition-all duration-300 hover:scale-105" style="box-shadow:0 0 20px -5px rgba(255,0,110,.5)">Start Learning <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 1: AGENDA -->
+<div class="slide" id="s1">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-4xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="map" class="w-3 h-3"></i> Roadmap</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-10">What We'll Cover Today</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="mini-card flex items-start gap-3"><div class="w-9 h-9 rounded-xl brand-gradient flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold">01</span></div><div><h3 class="font-heading font-semibold text-sm mb-1">AI, ML & NLP Fundamentals</h3><p class="text-xs text-zinc-500">Core technologies powering the AI revolution</p></div></div>
+                <div class="mini-card flex items-start gap-3"><div class="w-9 h-9 rounded-xl purple-gradient flex items-center justify-center flex-shrink-0"><span class="text-xs font-bold">02</span></div><div><h3 class="font-heading font-semibold text-sm mb-1">ChatGPT, Gemini & Copilot</h3><p class="text-xs text-zinc-500">Projects, team sharing & prompt engineering</p></div></div>
+                <div class="mini-card flex items-start gap-3"><div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#10b981,#059669)"><span class="text-xs font-bold">03</span></div><div><h3 class="font-heading font-semibold text-sm mb-1">AI for Content Creation</h3><p class="text-xs text-zinc-500">Blogs, social media, emails, marketing copy</p></div></div>
+                <div class="mini-card flex items-start gap-3"><div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><span class="text-xs font-bold">04</span></div><div><h3 class="font-heading font-semibold text-sm mb-1">Image, Audio & Video with AI</h3><p class="text-xs text-zinc-500">ChatGPT images, Gemini audio, Lumina video</p></div></div>
+                <div class="mini-card flex items-start gap-3 md:col-span-2"><div class="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><span class="text-xs font-bold">05</span></div><div><h3 class="font-heading font-semibold text-sm mb-1">Premium AI Models — What Extra Do You Get?</h3><p class="text-xs text-zinc-500">Free vs Premium comparison, exclusive features, and whether it's worth upgrading</p></div></div>
+            </div>
+            <div class="mt-8 flex items-center gap-5 text-xs text-zinc-500"><span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5"></i>~90 min</span><span class="flex items-center gap-1.5"><i data-lucide="layers" class="w-3.5 h-3.5"></i>30 slides</span><span class="flex items-center gap-1.5"><i data-lucide="zap" class="w-3.5 h-3.5"></i>Hands-on</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 2: WHAT IS AI -->
+<div class="slide" id="s2">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="cpu" class="w-3 h-3"></i> Section 01</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">What is Artificial Intelligence?</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">AI is the simulation of human intelligence in machines — enabling them to think, learn, and make decisions.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="img-guide" style="height:240px"><img src="https://picsum.photos/seed/ai-neural-brain/600/300.jpg" alt="AI" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Concept</div><div class="step-label">AI mimics human cognition at scale</div></div>
+                <div class="space-y-3">
+                    <div class="mini-card"><div class="flex items-center gap-2 mb-1.5"><i data-lucide="target" class="w-4 h-4 text-brand"></i><h4 class="font-heading font-semibold text-sm">Narrow AI (ANI)</h4></div><p class="text-xs text-zinc-500">Designed for specific tasks — Siri, recommendations, spam filters. This is what we use today.</p></div>
+                    <div class="mini-card"><div class="flex items-center gap-2 mb-1.5"><i data-lucide="sparkles" class="w-4 h-4 text-purple-400"></i><h4 class="font-heading font-semibold text-sm">General AI (AGI)</h4></div><p class="text-xs text-zinc-500">Hypothetical AI with human-level intelligence across all domains. Still theoretical.</p></div>
+                    <div class="mini-card"><div class="flex items-center gap-2 mb-1.5"><i data-lucide="brain" class="w-4 h-4 text-blue-400"></i><h4 class="font-heading font-semibold text-sm">Super AI (ASI)</h4></div><p class="text-xs text-zinc-500">Surpasses human intelligence in every way. Science fiction for now.</p></div>
+                    <div class="highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Key Insight:</strong> All tools we'll discuss (ChatGPT, Gemini, etc.) are Narrow AI — incredibly powerful at specific tasks but not conscious.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 3: WHAT IS ML -->
+<div class="slide" id="s3">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="cpu" class="w-3 h-3"></i> Section 01</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">What is Machine Learning?</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">ML is a subset of AI where machines learn from data without being explicitly programmed.</p>
+            <div class="grid grid-cols-3 gap-4 mb-6">
+                <div class="mini-card text-center py-5"><div class="w-12 h-12 rounded-2xl brand-gradient flex items-center justify-center mx-auto mb-3"><i data-lucide="database" class="w-5 h-5"></i></div><h4 class="font-heading font-semibold text-sm mb-1">Data Input</h4><p class="text-[.65rem] text-zinc-500">Feed millions of examples</p></div>
+                <div class="mini-card text-center py-5"><div class="w-12 h-12 rounded-2xl purple-gradient flex items-center justify-center mx-auto mb-3"><i data-lucide="cog" class="w-5 h-5"></i></div><h4 class="font-heading font-semibold text-sm mb-1">Pattern Learning</h4><p class="text-[.65rem] text-zinc-500">Algorithms find rules</p></div>
+                <div class="mini-card text-center py-5"><div class="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3" style="background:linear-gradient(135deg,#10b981,#059669)"><i data-lucide="trending-up" class="w-5 h-5"></i></div><h4 class="font-heading font-semibold text-sm mb-1">Prediction</h4><p class="text-[.65rem] text-zinc-500">Apply to new data</p></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-heading font-semibold text-sm mb-3">Types of Machine Learning</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white/[.02] border border-white/5"><span class="tag tag-brand text-[.55rem] mt-0.5">Supervised</span><p class="text-xs text-zinc-400">Learns from labeled data (input→output pairs). Like a teacher guiding.</p></div>
+                        <div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white/[.02] border border-white/5"><span class="tag tag-purple text-[.55rem] mt-0.5">Unsupervised</span><p class="text-xs text-zinc-400">Finds hidden patterns in unlabeled data. Self-discovery.</p></div>
+                        <div class="flex items-start gap-2.5 p-2.5 rounded-lg bg-white/[.02] border border-white/5"><span class="tag tag-green text-[.55rem] mt-0.5">Reinforcement</span><p class="text-xs text-zinc-400">Learns through trial & error with rewards. Like training a dog.</p></div>
+                    </div>
+                </div>
+                <div class="img-guide" style="height:200px"><img src="https://picsum.photos/seed/ml-chart-data/600/250.jpg" alt="ML" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Visual</div><div class="step-label">More data = better ML models</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 4: WHAT IS NLP -->
+<div class="slide" id="s4">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="cpu" class="w-3 h-3"></i> Section 01</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">What is NLP?</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">Natural Language Processing enables machines to read, understand, and generate human language.</p>
+            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                <div class="space-y-3">
+                    <div class="mini-card flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center flex-shrink-0"><i data-lucide="eye" class="w-4 h-4 text-brand"></i></div><div><h5 class="text-sm font-semibold">NLU — Understanding</h5><p class="text-xs text-zinc-500 mt-1">Comprehends meaning, intent, sentiment from text</p></div></div>
+                    <div class="mini-card flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0"><i data-lucide="message-circle" class="w-4 h-4 text-purple-400"></i></div><div><h5 class="text-sm font-semibold">NLG — Generation</h5><p class="text-xs text-zinc-500 mt-1">Produces human-like text from data</p></div></div>
+                    <div class="mini-card flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0"><i data-lucide="repeat" class="w-4 h-4 text-blue-400"></i></div><div><h5 class="text-sm font-semibold">Transformer Architecture</h5><p class="text-xs text-zinc-500 mt-1">The breakthrough (2017) that powers modern NLP</p></div></div>
+                </div>
+                <div class="img-guide" style="height:240px"><img src="https://picsum.photos/seed/nlp-language-words/600/300.jpg" alt="NLP" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Pipeline</div><div class="step-label">Text → Processing → Understanding → Response</div></div>
+            </div>
+            <h4 class="font-heading font-semibold text-sm mb-3">NLP in Your Daily Life</h4>
+            <div class="grid grid-cols-4 md:grid-cols-8 gap-2">
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="search" class="w-4 h-4 text-brand mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Search</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="spell-check" class="w-4 h-4 text-purple-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Spell Check</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="languages" class="w-4 h-4 text-blue-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Translate</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="bot" class="w-4 h-4 text-green-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Chatbots</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="mail" class="w-4 h-4 text-yellow-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Spam</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="mic" class="w-4 h-4 text-red-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Voice</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="smile" class="w-4 h-4 text-pink-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Sentiment</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="file-text" class="w-4 h-4 text-cyan-400 mx-auto mb-1"></i><p class="text-[.55rem] text-zinc-400">Summary</p></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 5: AI vs ML vs NLP -->
+<div class="slide" id="s5">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-4xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="cpu" class="w-3 h-3"></i> Section 01</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-8">AI vs ML vs NLP</h2>
+            <div class="flex justify-center mb-8">
+                <div class="relative w-[280px] h-[280px]">
+                    <div class="absolute inset-0 rounded-full border border-white/10" style="background:rgba(255,0,110,.03)"></div>
+                    <div class="absolute top-[15%] left-[15%] right-[15%] bottom-[15%] rounded-full border border-purple-500/20" style="background:rgba(107,45,143,.05)"></div>
+                    <div class="absolute top-[35%] left-[35%] right-[35%] bottom-[35%] rounded-full border border-blue-500/30" style="background:rgba(59,130,246,.08)"></div>
+                    <div class="absolute top-3 left-1/2 -translate-x-1/2 text-[.6rem] font-bold text-brand tracking-wider uppercase">AI</div>
+                    <div class="absolute top-[20%] left-1/2 -translate-x-1/2 text-[.6rem] font-bold text-purple-400 tracking-wider uppercase">ML</div>
+                    <div class="absolute top-[40%] left-1/2 -translate-x-1/2 text-[.6rem] font-bold text-blue-400 tracking-wider">NLP</div>
+                    <div class="absolute bottom-[12%] left-1/2 -translate-x-1/2 text-center"><p class="text-[.55rem] text-zinc-500">Deep Learning</p><p class="text-[.55rem] text-zinc-500">Transformers → LLMs</p></div>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-3">
+                <div class="p-4 rounded-xl border border-brand/20 bg-brand/5"><h4 class="font-heading font-semibold text-brand text-sm mb-1">AI = Umbrella</h4><p class="text-xs text-zinc-400">Broad field of making machines intelligent.</p></div>
+                <div class="p-4 rounded-xl border border-purple-500/20 bg-purple-500/5"><h4 class="font-heading font-semibold text-purple-400 text-sm mb-1">ML = Method</h4><p class="text-xs text-zinc-400">Subset that learns from data instead of rules.</p></div>
+                <div class="p-4 rounded-xl border border-blue-500/20 bg-blue-500/5"><h4 class="font-heading font-semibold text-blue-400 text-sm mb-1">NLP = Application</h4><p class="text-xs text-zinc-400">Specialized ML for human language.</p></div>
+            </div>
+            <div class="mt-5 p-3 rounded-xl bg-white/[.03] border border-white/5 text-center"><p class="text-xs text-zinc-400"><strong class="text-white">Analogy:</strong> AI is <span class="text-brand">Cooking</span> → ML is <span class="text-purple-400">Following Recipes</span> → NLP is <span class="text-blue-400">Making a Specific Dish</span> 🍝</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 6: HOW LLMs WORK -->
+<div class="slide" id="s6">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="cpu" class="w-3 h-3"></i> Section 01</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">How LLMs Actually Work</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">Large Language Models predict the next word — but the pipeline is fascinating.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Tokenization</h4><p class="text-[.65rem] text-zinc-500">Text broken into tokens (words/subwords)</p><div class="mt-1.5 flex flex-wrap gap-1"><span class="px-1.5 py-0.5 rounded bg-brand/10 text-brand text-[.6rem]">Hello</span><span class="px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-400 text-[.6rem]">world</span><span class="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 text-[.6rem]">how</span><span class="px-1.5 py-0.5 rounded bg-green-500/10 text-green-400 text-[.6rem]">are</span><span class="px-1.5 py-0.5 rounded bg-yellow-500/10 text-yellow-400 text-[.6rem]">you?</span></div></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Embedding</h4><p class="text-[.65rem] text-zinc-500">Tokens → numbers (vectors) that capture meaning</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Attention Mechanism</h4><p class="text-[.65rem] text-zinc-500">Weighs which words relate to each other — understands context</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Next Token Prediction</h4><p class="text-[.65rem] text-zinc-500">Predicts most likely next token from training patterns</p></div>
+                    <div class="step-card" data-step="5"><h4 class="font-heading font-semibold text-xs mb-0.5">Output Generation</h4><p class="text-[.65rem] text-zinc-500">Repeats to generate complete, coherent responses</p></div>
+                </div>
+                <div>
+                    <div class="img-guide mb-4" style="height:200px"><img src="https://picsum.photos/seed/neural-network-layers/600/250.jpg" alt="Neural Net" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Architecture</div><div class="step-label">Transformer Neural Network layers</div></div>
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-xs mb-2 flex items-center gap-1.5"><i data-lucide="info" class="w-3.5 h-3.5 text-brand"></i>Fun Facts</h4><ul class="space-y-1.5 text-[.65rem] text-zinc-400"><li><span class="text-brand">•</span> GPT-4 trained on ~13 trillion tokens</li><li><span class="text-purple-400">•</span> Training cost: estimated $100M+</li><li><span class="text-blue-400">•</span> "Transformer" invented by Google in 2017</li><li><span class="text-green-400">•</span> LLMs don't "understand" — they predict patterns</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 7: CHATGPT -->
+<div class="slide" id="s7">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="message-square" class="w-3 h-3"></i> Section 02</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">ChatGPT by OpenAI</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">The most popular AI assistant — powered by GPT-4o with vision, browsing, and code execution.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="screenshot-frame" style="height:280px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">chatgpt.com</span></div><img src="https://picsum.photos/seed/chatgpt-dark-ui/600/280.jpg" alt="ChatGPT" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                <div class="space-y-3">
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">Core Capabilities</h4><div class="flex flex-wrap gap-1.5"><span class="tag tag-brand text-[.55rem]">Text Gen</span><span class="tag tag-purple text-[.55rem]">Code</span><span class="tag tag-blue text-[.55rem]">Vision</span><span class="tag tag-green text-[.55rem]">Browse</span><span class="tag tag-yellow text-[.55rem]">Analysis</span><span class="tag text-[.55rem]">File Upload</span></div></div>
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">AI/ML/NLP Inside ChatGPT</h4><ul class="space-y-1 text-xs text-zinc-400"><li><strong class="text-white">NLP:</strong> Understands natural language prompts</li><li><strong class="text-white">ML:</strong> Fine-tuned with RLHF (human feedback)</li><li><strong class="text-white">AI:</strong> Multi-modal — text, images, audio</li><li><strong class="text-white">Vision:</strong> GPT-4o analyzes uploaded images</li></ul></div>
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">Available Models</h4><div class="space-y-1.5 text-xs"><div class="flex items-center justify-between"><span class="text-zinc-400">GPT-4o</span><span class="tag tag-brand text-[.5rem]">Best</span></div><div class="flex items-center justify-between"><span class="text-zinc-400">GPT-4o mini</span><span class="tag tag-green text-[.5rem]">Fast</span></div><div class="flex items-center justify-between"><span class="text-zinc-400">o1 / o1-mini</span><span class="tag tag-purple text-[.5rem]">Reasoning</span></div></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 8: GEMINI -->
+<div class="slide" id="s8">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="message-square" class="w-3 h-3"></i> Section 02</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">Google Gemini</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">Natively multi-modal AI — built to understand text, images, audio, video, and code from day one.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">What Makes Gemini Different</h4><ul class="space-y-1 text-xs text-zinc-400"><li><strong class="text-white">Natively Multi-modal:</strong> Not bolted on</li><li><strong class="text-white">Google Ecosystem:</strong> Gmail, Docs, Sheets, Maps</li><li><strong class="text-white">1M Token Context:</strong> Process entire books</li><li><strong class="text-white">Real-time Info:</strong> Connected to Google Search</li></ul></div>
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">AI/ML/NLP Inside Gemini</h4><ul class="space-y-1 text-xs text-zinc-400"><li><strong class="text-white">NLP:</strong> Based on PaLM + Gemini architecture</li><li><strong class="text-white">ML:</strong> Trained on Google's massive data infra</li><li><strong class="text-white">AI:</strong> Multi-modal across all content types</li></ul></div>
+                </div>
+                <div>
+                    <div class="screenshot-frame mb-3" style="height:200px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">gemini.google.com</span></div><img src="https://picsum.photos/seed/gemini-google-ui/600/220.jpg" alt="Gemini" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="grid grid-cols-3 gap-2"><div class="p-3 rounded-xl bg-white/[.03] border border-white/5 text-center"><p class="text-lg font-bold font-heading text-brand">1M</p><p class="text-[.55rem] text-zinc-500">Token Context</p></div><div class="p-3 rounded-xl bg-white/[.03] border border-white/5 text-center"><p class="text-lg font-bold font-heading text-purple-400">5</p><p class="text-[.55rem] text-zinc-500">Modalities</p></div><div class="p-3 rounded-xl bg-white/[.03] border border-white/5 text-center"><p class="text-lg font-bold font-heading text-green-400">Free</p><p class="text-[.55rem] text-zinc-500">Tier Available</p></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 9: COPILOT -->
+<div class="slide" id="s9">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="message-square" class="w-3 h-3"></i> Section 02</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">Microsoft Copilot</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">AI embedded in the tools you already use — Word, Excel, PowerPoint, Teams, Edge, Windows.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="screenshot-frame" style="height:240px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">copilot.microsoft.com</span></div><img src="https://picsum.photos/seed/microsoft-copilot-dark/600/260.jpg" alt="Copilot" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                <div class="space-y-3">
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">Copilot Ecosystem</h4><div class="grid grid-cols-2 gap-1.5 text-xs"><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="file-text" class="w-3 h-3 text-blue-400"></i>Word</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="table" class="w-3 h-3 text-green-400"></i>Excel</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="presentation" class="w-3 h-3 text-orange-400"></i>PowerPoint</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="users" class="w-3 h-3 text-purple-400"></i>Teams</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="mail" class="w-3 h-3 text-blue-300"></i>Outlook</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="globe" class="w-3 h-3 text-cyan-400"></i>Edge</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="terminal" class="w-3 h-3 text-yellow-400"></i>GitHub</div><div class="flex items-center gap-1.5 text-zinc-400"><i data-lucide="monitor" class="w-3 h-3 text-zinc-400"></i>Windows</div></div></div>
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2">AI/ML/NLP Inside Copilot</h4><ul class="space-y-1 text-xs text-zinc-400"><li><strong class="text-white">Powered by:</strong> OpenAI's GPT-4o</li><li><strong class="text-white">NLP:</strong> Natural language commands in apps</li><li><strong class="text-white">ML:</strong> Learns from your Microsoft Graph data</li><li><strong class="text-white">Unique:</strong> Has your organizational context</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 10: COMPARISON -->
+<div class="slide" id="s10">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="message-square" class="w-3 h-3"></i> Section 02</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">ChatGPT vs Gemini vs Copilot</h2>
+            <div class="overflow-x-auto rounded-xl border border-white/10">
+                <table class="w-full text-xs">
+                    <thead><tr class="bg-white/[.03]"><th class="text-left p-3 font-heading font-semibold text-zinc-500 uppercase tracking-wider">Feature</th><th class="text-center p-3 font-heading font-semibold text-brand uppercase tracking-wider">ChatGPT</th><th class="text-center p-3 font-heading font-semibold text-blue-400 uppercase tracking-wider">Gemini</th><th class="text-center p-3 font-heading font-semibold text-purple-400 uppercase tracking-wider">Copilot</th></tr></thead>
+                    <tbody class="divide-y divide-white/5">
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Creator</td><td class="p-3 text-center">OpenAI</td><td class="p-3 text-center">Google</td><td class="p-3 text-center">Microsoft</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Free Tier</td><td class="p-3 text-center text-green-400">✓</td><td class="p-3 text-center text-green-400">✓</td><td class="p-3 text-center text-green-400">✓</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Image Gen</td><td class="p-3 text-center text-green-400">✓ DALL·E</td><td class="p-3 text-center text-green-400">✓ Imagen</td><td class="p-3 text-center text-green-400">✓ DALL·E</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Audio Gen</td><td class="p-3 text-center text-yellow-400">Limited</td><td class="p-3 text-center text-green-400">✓ Best</td><td class="p-3 text-center text-zinc-600">✗</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Web Browsing</td><td class="p-3 text-center text-green-400">✓</td><td class="p-3 text-center text-green-400">✓ Google</td><td class="p-3 text-center text-green-400">✓ Bing</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Context Window</td><td class="p-3 text-center">128K</td><td class="p-3 text-center text-brand font-bold">1M</td><td class="p-3 text-center">128K</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Office Integration</td><td class="p-3 text-center text-zinc-600">✗</td><td class="p-3 text-center text-yellow-400">Partial</td><td class="p-3 text-center text-green-400">✓ Best</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Projects/Workspace</td><td class="p-3 text-center text-green-400">✓</td><td class="p-3 text-center text-green-400">✓</td><td class="p-3 text-center text-yellow-400">Limited</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Custom Assistants</td><td class="p-3 text-center text-green-400">✓ GPTs</td><td class="p-3 text-center text-green-400">✓ Gems</td><td class="p-3 text-center text-zinc-600">✗</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-4 highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Tip:</strong> ChatGPT for projects & custom GPTs · Gemini for research & audio · Copilot for Microsoft 365 workflows</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 11: CHATGPT PROJECTS -->
+<div class="slide" id="s11">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="folder" class="w-3 h-3"></i> Projects & Workspaces</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Creating Projects in ChatGPT</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">Projects organize chats, files, and custom instructions in one shared workspace.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Open ChatGPT → Click "Projects"</h4><p class="text-[.65rem] text-zinc-500">Find the folder icon in the left sidebar</p></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Click "Create Project"</h4><p class="text-[.65rem] text-zinc-500">Name your project and set a description</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Upload Files</h4><p class="text-[.65rem] text-zinc-500">Add PDFs, docs, code, images — AI references these in all chats</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Set Custom Instructions</h4><p class="text-[.65rem] text-zinc-500">Define AI behavior: tone, role, format for this project</p></div>
+                    <div class="step-card" data-step="5"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Share with Team</h4><p class="text-[.65rem] text-zinc-500">Click Share → Add emails → Set permissions (view/edit)</p></div>
+                    <div class="step-card" data-step="6"><h4 class="font-heading font-semibold text-xs mb-0.5">Start Chatting in Context</h4><p class="text-[.65rem] text-zinc-500">All chats access uploaded files & instructions automatically</p></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="screenshot-frame" style="height:170px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Step 1-2: Projects Panel</span></div><img src="https://picsum.photos/seed/chatgpt-projects-panel/600/190.jpg" alt="Projects" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="screenshot-frame" style="height:170px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Step 3-4: Upload & Instructions</span></div><img src="https://picsum.photos/seed/chatgpt-upload-files/600/190.jpg" alt="Upload" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="screenshot-frame" style="height:170px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Step 5: Share Dialog</span></div><img src="https://picsum.photos/seed/chatgpt-share-team/600/190.jpg" alt="Share" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 12: GEMINI GEMS -->
+<div class="slide" id="s12">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="folder" class="w-3 h-3"></i> Projects & Workspaces</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Creating Gems in Gemini</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">Gems are Gemini's custom AI assistants with specific instructions and knowledge.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Open Gemini → Click "Gems"</h4><p class="text-[.65rem] text-zinc-500">Or go to gemini.google.com/gems</p></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Click "New Gem"</h4><p class="text-[.65rem] text-zinc-500">Start creating your custom assistant</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Write Instructions</h4><p class="text-[.65rem] text-zinc-500">Define what the Gem does, its personality, output format</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Upload Reference Files</h4><p class="text-[.65rem] text-zinc-500">Add docs the Gem should reference when responding</p></div>
+                    <div class="step-card" data-step="5"><h4 class="font-heading font-semibold text-xs mb-0.5">Save & Share via Link</h4><p class="text-[.65rem] text-zinc-500">Click Save → Copy share link for team members</p></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="screenshot-frame" style="height:190px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Gemini Gems Panel</span></div><img src="https://picsum.photos/seed/gemini-gems-panel/600/210.jpg" alt="Gems" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="screenshot-frame" style="height:190px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Gem Configuration</span></div><img src="https://picsum.photos/seed/gemini-gem-config/600/210.jpg" alt="Config" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Gem vs Project:</strong> Gems are like "custom ChatGPTs" — reusable AI personas. Create a "Marketing Expert" or "Code Reviewer" for your whole team.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 13: COPILOT WORKSPACE -->
+<div class="slide" id="s13">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="folder" class="w-3 h-3"></i> Projects & Workspaces</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Sharing Workspaces in Copilot</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">Copilot integrates with Microsoft 365 sharing — collaborate directly in Word, Teams, and Loop.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Open Copilot in any M365 App</h4><p class="text-[.65rem] text-zinc-500">Click the Copilot icon in Word, Excel, PPT, or Teams</p></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Generate Content with Copilot</h4><p class="text-[.65rem] text-zinc-500">"Create a project brief based on this document..."</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Share via Standard M365 Sharing</h4><p class="text-[.65rem] text-zinc-500">Same Share button you already use — same permissions</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Use Microsoft Loop for Teams</h4><p class="text-[.65rem] text-zinc-500">Create shared Loop workspaces where Copilot assists everyone</p></div>
+                    <div class="step-card" data-step="5"><h4 class="font-heading font-semibold text-xs mb-0.5">Export Conversations</h4><p class="text-[.65rem] text-zinc-500">In Copilot Chat, export and share useful conversations</p></div>
+                </div>
+                <div>
+                    <div class="screenshot-frame mb-3" style="height:240px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Copilot in Microsoft Word</span></div><img src="https://picsum.photos/seed/copilot-word-panel/600/260.jpg" alt="Copilot Word" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Key Advantage:</strong> Copilot inherits your organization's sharing model. If someone has access to a document, they can use Copilot on it too.</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 14: PROMPT ENGINEERING INTRO -->
+<div class="slide" id="s14">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-4xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="wand-2" class="w-3 h-3"></i> Prompt Engineering</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">Prompt Engineering</h2>
+            <p class="text-base text-zinc-400 font-light mb-6 max-w-2xl">The skill of crafting instructions that get the best possible output from AI. This is your superpower.</p>
+            <div class="grid md:grid-cols-2 gap-4 mb-6">
+                <div class="p-4 rounded-xl border border-red-500/20 bg-red-500/5"><p class="text-[.6rem] font-bold text-red-400 uppercase tracking-wider mb-2">❌ Bad Prompt</p><p class="text-sm text-zinc-400 font-mono">"Write about marketing"</p><p class="text-xs text-zinc-500 mt-2">Too vague — generic, unhelpful output</p></div>
+                <div class="p-4 rounded-xl border border-green-500/20 bg-green-500/5"><p class="text-[.6rem] font-bold text-green-400 uppercase tracking-wider mb-2">✓ Good Prompt</p><p class="text-sm text-zinc-400 font-mono">"Write a 500-word LinkedIn post about content marketing trends in 2025. Professional tone, 3 bullet points, end with a question."</p><p class="text-xs text-zinc-500 mt-2">Specific — length, platform, tone, structure</p></div>
+            </div>
+            <div class="img-guide" style="height:180px"><img src="https://picsum.photos/seed/prompt-engineering-art/600/220.jpg" alt="Prompt" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Skill</div><div class="step-label">Prompt Engineering = Talking to AI effectively</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 15: CREATE FRAMEWORK -->
+<div class="slide" id="s15">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="wand-2" class="w-3 h-3"></i> Prompt Engineering</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">The CREATE Framework</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+                <div class="mini-card"><div class="flex items-center gap-2 mb-2"><span class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center text-xs font-bold">C</span><h4 class="font-heading font-semibold text-sm">Context</h4></div><p class="text-xs text-zinc-500">Background info. "I'm a startup founder in fintech..."</p></div>
+                <div class="mini-card"><div class="flex items-center gap-2 mb-2"><span class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center text-xs font-bold">R</span><h4 class="font-heading font-semibold text-sm">Role</h4></div><p class="text-xs text-zinc-500">Who should AI be? "Act as a senior strategist..."</p></div>
+                <div class="mini-card"><div class="flex items-center gap-2 mb-2"><span class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center text-xs font-bold">E</span><h4 class="font-heading font-semibold text-sm">Exact Task</h4></div><p class="text-xs text-zinc-500">What specifically to do. "Write a 300-word intro..."</p></div>
+                <div class="mini-card"><div class="flex items-center gap-2 mb-2"><span class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center text-xs font-bold">A</span><h4 class="font-heading font-semibold text-sm">Audience</h4></div><p class="text-xs text-zinc-500">Who is this for? "For CTOs at enterprise companies..."</p></div>
+                <div class="mini-card"><div class="flex items-center gap-2 mb-2"><span class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center text-xs font-bold">T</span><h4 class="font-heading font-semibold text-sm">Tone & Format</h4></div><p class="text-xs text-zinc-500">Style. "Conversational, use H2 headers, bullet points"</p></div>
+                <div class="mini-card"><div class="flex items-center gap-2 mb-2"><span class="w-7 h-7 rounded-lg brand-gradient flex items-center justify-center text-xs font-bold">E</span><h4 class="font-heading font-semibold text-sm">Examples</h4></div><p class="text-xs text-zinc-500">Show what you want. "Here's a sample of the style..."</p></div>
+            </div>
+            <div class="prompt-example"><div class="label text-brand"><i data-lucide="sparkles" class="w-3 h-3"></i> Complete Example</div><p class="text-zinc-300 text-xs">[Context] I run a SaaS company with 50 employees. [Role] Act as an HR expert. [Exact Task] Write a company-wide email announcing hybrid work policy. [Audience] All employees aged 25-55. [Tone] Warm but professional. [Examples] Like this previous email: "Team, we're excited to share..." — [Format] Email with subject line, greeting, 3 key points, closing.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 16: ADVANCED PROMPTS -->
+<div class="slide" id="s16">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="wand-2" class="w-3 h-3"></i> Prompt Engineering</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Advanced Prompt Techniques</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="repeat" class="w-4 h-4 text-brand"></i>Chain-of-Thought</h4><p class="text-xs text-zinc-500 mb-2">Force AI to think step by step</p><div class="prompt-example"><div class="label text-purple-400">Example</div><p class="text-zinc-400 text-[.7rem]">"Solve this problem. Think step by step and explain your reasoning at each stage before the final answer."</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="shuffle" class="w-4 h-4 text-purple-400"></i>Few-Shot Learning</h4><p class="text-xs text-zinc-500 mb-2">Give examples of input→output first</p><div class="prompt-example"><div class="label text-blue-400">Example</div><p class="text-zinc-400 text-[.7rem]">"Classify: 'Love it!' → Positive. 'Terrible.' → Negative. 'It's okay.' → Neutral. Now: 'Pretty good but could improve' →"</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="user-check" class="w-4 h-4 text-green-400"></i>Role-Playing</h4><p class="text-xs text-zinc-500 mb-2">Assign a specific persona</p><div class="prompt-example"><div class="label text-green-400">Example</div><p class="text-zinc-400 text-[.7rem]">"You are a senior UX researcher at Google. Review this wireframe for information hierarchy and accessibility."</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="git-branch" class="w-4 h-4 text-yellow-400"></i>Constraint Setting</h4><p class="text-xs text-zinc-500 mb-2">Set boundaries for quality control</p><div class="prompt-example"><div class="label text-yellow-400">Example</div><p class="text-zinc-400 text-[.7rem]">"Write a product description. Max 100 words, no adjectives, exactly 3 features, simple language a 12-year-old understands."</p></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 17: CONTENT CREATION OVERVIEW -->
+<div class="slide" id="s17">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-4xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="pen-tool" class="w-3 h-3"></i> Section 03 — Content</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">AI for Content Creation</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">AI can generate, edit, repurpose, and optimize any type of content — 10x your productivity.</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                <div class="mini-card text-center py-4"><i data-lucide="file-text" class="w-6 h-6 text-brand mx-auto mb-2"></i><p class="text-xs font-semibold">Blog Posts</p><p class="text-[.6rem] text-zinc-500 mt-1">Full articles, SEO</p></div>
+                <div class="mini-card text-center py-4"><i data-lucide="at-sign" class="w-6 h-6 text-purple-400 mx-auto mb-2"></i><p class="text-xs font-semibold">Social Media</p><p class="text-[.6rem] text-zinc-500 mt-1">Posts, threads</p></div>
+                <div class="mini-card text-center py-4"><i data-lucide="mail" class="w-6 h-6 text-blue-400 mx-auto mb-2"></i><p class="text-xs font-semibold">Email Copy</p><p class="text-[.6rem] text-zinc-500 mt-1">Newsletters</p></div>
+                <div class="mini-card text-center py-4"><i data-lucide="megaphone" class="w-6 h-6 text-green-400 mx-auto mb-2"></i><p class="text-xs font-semibold">Ad Copy</p><p class="text-[.6rem] text-zinc-500 mt-1">Google, Meta ads</p></div>
+            </div>
+            <div class="img-guide" style="height:200px"><img src="https://picsum.photos/seed/content-creation-ai-desk/600/250.jpg" alt="Content" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Workflow</div><div class="step-label">Idea → AI Draft → Human Edit → Publish</div></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 18: BLOG & SEO -->
+<div class="slide" id="s18">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="pen-tool" class="w-3 h-3"></i> Section 03 — Content</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Blog Posts & SEO Content</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">AI can write full blog posts with proper structure, keywords, and SEO optimization.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <h4 class="font-heading font-semibold text-sm mb-3">Step-by-Step Process</h4>
+                    <div class="space-y-2.5">
+                        <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Generate Topic Ideas</h4><p class="text-[.65rem] text-zinc-500">"Give me 10 blog topics about [niche] with high search volume"</p></div>
+                        <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Create Outline</h4><p class="text-[.65rem] text-zinc-500">"Create a detailed blog outline with H2, H3 sections"</p></div>
+                        <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Write Each Section</h4><p class="text-[.65rem] text-zinc-500">Don't write the whole article at once — go section by section</p></div>
+                        <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Add SEO Elements</h4><p class="text-[.65rem] text-zinc-500">Meta title, description, internal linking suggestions</p></div>
+                        <div class="step-card" data-step="5"><h4 class="font-heading font-semibold text-xs mb-0.5">Human Review & Edit</h4><p class="text-[.65rem] text-zinc-500">Always add your voice, experience, and fact-check</p></div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="prompt-example"><div class="label text-brand"><i data-lucide="sparkles" class="w-3 h-3"></i> Blog Prompt Template</div><p class="text-zinc-300 text-[.7rem]">"Write a 1500-word blog post about [TOPIC]. Target keyword: [KEYWORD]. Include: compelling H1, 4-5 H2 sections, bullet points, conclusion with CTA. Tone: [friendly/authoritative]. Audience: [describe reader]. Use keyword naturally 3-5 times."</p></div>
+                    <div class="mini-card"><h4 class="font-heading font-semibold text-xs mb-2">Pro Tips</h4><ul class="space-y-1 text-[.65rem] text-zinc-400"><li class="flex items-start gap-1.5"><span class="text-brand">•</span>Write section by section for better quality</li><li class="flex items-start gap-1.5"><span class="text-brand">•</span>Ask AI to add personal anecdotes or data points</li><li class="flex items-start gap-1.5"><span class="text-brand">•</span>Use "make it more conversational" to refine</li><li class="flex items-start gap-1.5"><span class="text-brand">•</span>Never publish AI content without human review</li></ul></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 19: SOCIAL MEDIA & EMAIL -->
+<div class="slide" id="s19">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="pen-tool" class="w-3 h-3"></i> Section 03 — Content</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Social Media & Email Content</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-3 flex items-center gap-1.5"><i data-lucide="at-sign" class="w-4 h-4 text-brand"></i>Social Media Posts</h4>
+                    <div class="prompt-example mb-2"><div class="label text-purple-400">LinkedIn Thread</div><p class="text-zinc-400 text-[.7rem]">"Create a 7-part LinkedIn thread about [TOPIC]. Hook in post 1. Each post 2-3 lines max. End with CTA to follow. Tone: authoritative but approachable."</p></div>
+                    <div class="prompt-example mb-2"><div class="label text-blue-400">Twitter/X Thread</div><p class="text-zinc-400 text-[.7rem]">"Write a 10-tweet thread about [TOPIC]. Start with a controversial hook. Simple language. Include 🧵 indicator."</p></div>
+                    <div class="prompt-example"><div class="label text-green-400">Instagram Caption</div><p class="text-zinc-400 text-[.7rem]">"Write an Instagram caption for [IMAGE]. Include 10 relevant hashtags. Tone: witty/inspirational/educational."</p></div>
+                </div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-3 flex items-center gap-1.5"><i data-lucide="mail" class="w-4 h-4 text-purple-400"></i>Email Content</h4>
+                    <div class="prompt-example mb-2"><div class="label text-brand">Newsletter</div><p class="text-zinc-400 text-[.7rem]">"Write a 600-word newsletter about [TOPIC]. Include: personal intro, 3 key takeaways, one actionable tip, PPS CTA. Tone: like a friend sharing knowledge."</p></div>
+                    <div class="prompt-example mb-2"><div class="label text-yellow-400">Cold Email</div><p class="text-zinc-400 text-[.7rem]">"Write a cold email to [ROLE] at [COMPANY]. Problem: [PAIN]. Solution: [OFFER]. Under 100 words. Curiosity subject line. No salesy language."</p></div>
+                    <div class="prompt-example"><div class="label text-cyan-400">Subject Lines</div><p class="text-zinc-400 text-[.7rem]">"Generate 10 subject lines for [CONTENT]. Mix of: curiosity, urgency, benefit-driven, question formats. Max 50 chars each."</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 20: IMAGE GEN CHATGPT -->
+<div class="slide" id="s20">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="image" class="w-3 h-3"></i> Section 04 — Images</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Generate Images with ChatGPT (DALL·E)</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">ChatGPT includes DALL·E 3 — describe any image and get it generated in seconds.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Open ChatGPT (Plus/Free)</h4><p class="text-[.65rem] text-zinc-500">Free: limited DALL·E; Plus: unlimited access</p></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Type Your Image Description</h4><p class="text-[.65rem] text-zinc-500">Be specific: subject, style, lighting, colors, mood</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Review & Refine</h4><p class="text-[.65rem] text-zinc-500">"Make it more colorful", "Change to sunset lighting"</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Download & Use</h4><p class="text-[.65rem] text-zinc-500">Click download icon. Check terms for commercial use</p></div>
+                    <div class="step-card" data-step="5"><h4 class="font-heading font-semibold text-xs mb-0.5">Advanced: Upload Reference</h4><p class="text-[.65rem] text-zinc-500">Upload a photo → "Create similar but in watercolor style"</p></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="screenshot-frame" style="height:150px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Step 1-2: Type your prompt</span></div><img src="https://picsum.photos/seed/chatgpt-image-prompt/600/170.jpg" alt="Prompt" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="screenshot-frame" style="height:150px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Step 3-4: Generated result</span></div><img src="https://picsum.photos/seed/chatgpt-dalle-result/600/170.jpg" alt="Result" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="prompt-example"><div class="label text-brand"><i data-lucide="sparkles" class="w-3 h-3"></i> Image Prompt Template</div><p class="text-zinc-300 text-[.7rem]">"A minimalist logo for 'Nova' tech startup, stylized star, deep purple and electric blue gradient, clean white background, flat design, modern and futuristic"</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 21: IMAGE PROMPTS GALLERY -->
+<div class="slide" id="s21">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="image" class="w-3 h-3"></i> Section 04 — Images</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Image Prompt Examples by Category</h2>
+            <div class="grid md:grid-cols-3 gap-3">
+                <div class="mini-card"><div class="img-guide mb-2" style="height:120px"><img src="https://picsum.photos/seed/ai-logo-design/400/150.jpg" alt="Logo" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Logo</div></div><p class="text-[.65rem] text-zinc-400">"Minimalist logo for coffee brand 'Brew', warm brown, hand-drawn, white bg"</p></div>
+                <div class="mini-card"><div class="img-guide mb-2" style="height:120px"><img src="https://picsum.photos/seed/ai-social-post/400/150.jpg" alt="Social" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Social</div></div><p class="text-[.65rem] text-zinc-400">"Instagram post about productivity, clean modern, pastel colors, text space center"</p></div>
+                <div class="mini-card"><div class="img-guide mb-2" style="height:120px"><img src="https://picsum.photos/seed/ai-product-photo/400/150.jpg" alt="Product" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Product</div></div><p class="text-[.65rem] text-zinc-400">"Product photo of smartwatch on marble, soft studio lighting, dark moody bg"</p></div>
+                <div class="mini-card"><div class="img-guide mb-2" style="height:120px"><img src="https://picsum.photos/seed/ai-illustration-art/400/150.jpg" alt="Illustration" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Illustration</div></div><p class="text-[.65rem] text-zinc-400">"Flat illustration of diverse team brainstorming, vibrant, corporate style, no text"</p></div>
+                <div class="mini-card"><div class="img-guide mb-2" style="height:120px"><img src="https://picsum.photos/seed/ai-presentation-bg/400/150.jpg" alt="Slide" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Slide BG</div></div><p class="text-[.65rem] text-zinc-400">"Abstract gradient bg for presentation, dark blue to purple, subtle geometric"</p></div>
+                <div class="mini-card"><div class="img-guide mb-2" style="height:120px"><img src="https://picsum.photos/seed/ai-thumbnail-yt/400/150.jpg" alt="Thumb" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Thumbnail</div></div><p class="text-[.65rem] text-zinc-400">"YouTube thumbnail: person pointing at laptop shocked, yellow bg, bold text space"</p></div>
+            </div>
+            <div class="mt-4 highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Pro Tip:</strong> Always specify: subject + style + lighting + colors + mood + composition. Use "no text" to avoid garbled AI text in images.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 22: AUDIO GEMINI -->
+<div class="slide" id="s22">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="mic" class="w-3 h-3"></i> Section 04 — Audio</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Generate Audio with Gemini</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">Gemini's audio capabilities let you generate spoken content, podcasts, and voiceovers from text.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Open Gemini (gemini.google.com)</h4><p class="text-[.65rem] text-zinc-500">Audio features on free and premium tiers</p></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Click the Audio/Speaker Icon</h4><p class="text-[.65rem] text-zinc-500">Look for speaker or waveform icon in response area</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Request Audio Output</h4><p class="text-[.65rem] text-zinc-500">"Read this aloud" or "Create a podcast-style audio about..."</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Customize Voice & Style</h4><p class="text-[.65rem] text-zinc-500">Specify: professional, casual, dramatic, storytelling</p></div>
+                    <div class="step-card" data-step="5"><h4 class="font-heading font-semibold text-xs mb-0.5">Download the Audio File</h4><p class="text-[.65rem] text-zinc-500">Click download/share on the audio player</p></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="screenshot-frame" style="height:160px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Gemini Audio Interface</span></div><img src="https://picsum.photos/seed/gemini-audio-panel/600/180.jpg" alt="Audio" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="prompt-example"><div class="label text-blue-400"><i data-lucide="mic" class="w-3 h-3"></i> Audio Prompt Templates</div>
+                    <p class="text-zinc-300 text-[.7rem] mb-1.5"><strong class="text-white">Podcast Intro:</strong> "Create a 30-second podcast intro for 'Future Forward' tech show. Energetic, include tagline."</p>
+                    <p class="text-zinc-300 text-[.7rem] mb-1.5"><strong class="text-white">Voiceover:</strong> "Read this product description as professional voiceover, slow and clear, for explainer video."</p>
+                    <p class="text-zinc-300 text-[.7rem]"><strong class="text-white">Narration:</strong> "Narrate this blog post in storytelling style, like an audiobook, natural pauses."</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 23: AUDIO USE CASES -->
+<div class="slide" id="s23">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="mic" class="w-3 h-3"></i> Section 04 — Audio</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Audio Use Cases & Other Tools</h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <h4 class="font-heading font-semibold text-sm mb-3">What You Can Create</h4>
+                    <div class="space-y-2">
+                        <div class="mini-card flex items-start gap-3"><i data-lucide="podcast" class="w-5 h-5 text-brand mt-0.5 flex-shrink-0"></i><div><h5 class="text-xs font-semibold">Podcast Episodes</h5><p class="text-[.65rem] text-zinc-500">Full episodes with intro, segments, outro</p></div></div>
+                        <div class="mini-card flex items-start gap-3"><i data-lucide="video" class="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0"></i><div><h5 class="text-xs font-semibold">Video Voiceovers</h5><p class="text-[.65rem] text-zinc-500">Explainer videos, tutorials, reels</p></div></div>
+                        <div class="mini-card flex items-start gap-3"><i data-lucide="book-audio" class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0"></i><div><h5 class="text-xs font-semibold">Audiobook Chapters</h5><p class="text-[.65rem] text-zinc-500">Narrate your blog or book content</p></div></div>
+                        <div class="mini-card flex items-start gap-3"><i data-lucide="phone" class="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0"></i><div><h5 class="text-xs font-semibold">IVR / Phone Messages</h5><p class="text-[.65rem] text-zinc-500">Professional hold messages, greetings</p></div></div>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-heading font-semibold text-sm mb-3">Other Audio AI Tools</h4>
+                    <div class="space-y-2">
+                        <div class="mini-card flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-brand/10 flex items-center justify-center"><span class="text-xs font-bold text-brand">E</span></div><div><h5 class="text-xs font-semibold">ElevenLabs</h5><p class="text-[.6rem] text-zinc-500">Best voice cloning & TTS</p></div></div><span class="tag tag-brand text-[.5rem]">Premium</span></div>
+                        <div class="mini-card flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center"><span class="text-xs font-bold text-purple-400">M</span></div><div><h5 class="text-xs font-semibold">Murf AI</h5><p class="text-[.6rem] text-zinc-500">Professional voiceovers</p></div></div><span class="tag tag-purple text-[.5rem]">Freemium</span></div>
+                        <div class="mini-card flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center"><span class="text-xs font-bold text-green-400">S</span></div><div><h5 class="text-xs font-semibold">Suno AI</h5><p class="text-[.6rem] text-zinc-500">Generate songs with vocals</p></div></div><span class="tag tag-green text-[.5rem]">Free Tier</span></div>
+                        <div class="mini-card flex items-center justify-between"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center"><span class="text-xs font-bold text-blue-400">D</span></div><div><h5 class="text-xs font-semibold">Descript</h5><p class="text-[.6rem] text-zinc-500">Edit audio by editing text</p></div></div><span class="tag tag-blue text-[.5rem]">Freemium</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Gemini Advantage:</strong> Free and directly generates audio from text. For production quality, combine with ElevenLabs for voice cloning.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 24: VIDEO LUMINA -->
+<div class="slide" id="s24">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="video" class="w-3 h-3"></i> Section 04 — Video</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-3">Generate Videos with BytePlus Lumina</h2>
+            <p class="text-sm text-zinc-400 font-light mb-6 max-w-2xl">BytePlus Lumina turns text prompts into stunning AI-generated videos.</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="step-card" data-step="1"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Visit Lumina Video Page</h4><p class="text-[.65rem] text-zinc-500">Go to ai.byteplus.com/lumina/model-experience/video?mode=video</p></div>
+                    <div class="step-card" data-step="2"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Choose Video Mode</h4><p class="text-[.65rem] text-zinc-500">Select "Text to Video" or "Image to Video"</p></div>
+                    <div class="step-card" data-step="3"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Enter Your Prompt</h4><p class="text-[.65rem] text-zinc-500">Describe: action, camera movement, style, duration</p></div>
+                    <div class="step-card" data-step="4"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Set Parameters</h4><p class="text-[.65rem] text-zinc-500">Resolution, duration, aspect ratio, style presets</p></div>
+                    <div class="step-card" data-step="5"><div class="step-line"></div><h4 class="font-heading font-semibold text-xs mb-0.5">Click Generate & Wait</h4><p class="text-[.65rem] text-zinc-500">Video generates in 1-5 minutes depending on length</p></div>
+                    <div class="step-card" data-step="6"><h4 class="font-heading font-semibold text-xs mb-0.5">Preview & Download</h4><p class="text-[.65rem] text-zinc-500">Preview, regenerate if needed, download MP4</p></div>
+                </div>
+                <div class="space-y-3">
+                    <div class="screenshot-frame" style="height:135px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">ai.byteplus.com/lumina — Main Interface</span></div><img src="https://picsum.photos/seed/lumina-video-interface/600/155.jpg" alt="Lumina" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="screenshot-frame" style="height:135px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Prompt Input & Settings Panel</span></div><img src="https://picsum.photos/seed/lumina-prompt-settings/600/155.jpg" alt="Settings" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                    <div class="screenshot-frame" style="height:135px"><div class="title-bar"><div class="dot bg-red-500"></div><div class="dot bg-yellow-500"></div><div class="dot bg-green-500"></div><span class="text-[.6rem] text-zinc-500 ml-2">Generated Video Preview & Download</span></div><img src="https://picsum.photos/seed/lumina-video-result/600/155.jpg" alt="Result" class="w-full" style="height:calc(100% - 1.75rem);object-fit:cover"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 25: VIDEO PROMPTS -->
+<div class="slide" id="s25">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="video" class="w-3 h-3"></i> Section 04 — Video</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Lumina Video Prompts & Pro Tips</h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="mini-card"><h4 class="font-heading font-semibold text-xs mb-2 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-brand"></i>Product Video</h4><div class="prompt-example"><p class="text-zinc-400 text-[.65rem]">"A sleek smartphone rotating slowly on dark surface, studio lighting, camera slowly zooms in, cinematic depth of field, 4K, 5 seconds"</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-xs mb-2 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-purple-400"></i>Nature Scene</h4><div class="prompt-example"><p class="text-zinc-400 text-[.65rem]">"Aerial drone shot of tropical beach at sunset, waves gently crashing, golden hour lighting, smooth cinematic movement, 8 seconds"</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-xs mb-2 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-green-400"></i>Explainer Style</h4><div class="prompt-example"><p class="text-zinc-400 text-[.65rem]">"Flat 2D animation of person using laptop, minimalist style, soft colors, clean transitions, white background, 4 seconds loop"</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-xs mb-2 flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-blue-400"></i>Social Reel</h4><div class="prompt-example"><p class="text-zinc-400 text-[.65rem]">"Fast-paced city life montage, neon lights, people walking, time-lapse, vertical 9:16, dynamic transitions, 7 seconds"</p></div></div>
+            </div>
+            <div class="highlight-box mb-4"><p class="text-xs text-zinc-300"><strong class="text-brand">Video Prompt Formula:</strong> [Subject] + [Action/Movement] + [Camera angle/movement] + [Lighting] + [Style] + [Duration] + [Aspect Ratio]</p></div>
+            <div class="grid md:grid-cols-3 gap-3">
+                <div class="p-3 rounded-xl bg-white/[.03] border border-white/5"><h5 class="text-xs font-semibold mb-1.5 text-brand">Do ✓</h5><ul class="space-y-1 text-[.6rem] text-zinc-500"><li>• Describe camera movements</li><li>• Specify lighting conditions</li><li>• Keep prompts under 100 words</li><li>• Mention duration explicitly</li></ul></div>
+                <div class="p-3 rounded-xl bg-white/[.03] border border-white/5"><h5 class="text-xs font-semibold mb-1.5 text-red-400">Don't ✗</h5><ul class="space-y-1 text-[.6rem] text-zinc-500"><li>• Request complex dialogue</li><li>• Expect perfect text rendering</li><li>• Use vague descriptions</li><li>• Request copyrighted characters</li></ul></div>
+                <div class="p-3 rounded-xl bg-white/[.03] border border-white/5"><h5 class="text-xs font-semibold mb-1.5 text-green-400">Other Video AI</h5><ul class="space-y-1 text-[.6rem] text-zinc-500"><li>• <strong class="text-white">Runway Gen-3</strong> — Best quality</li><li>• <strong class="text-white">Pika Labs</strong> — Easy to use</li><li>• <strong class="text-white">Kling AI</strong> — Good motion</li><li>• <strong class="text-white">Sora</strong> — OpenAI (soon)</li></ul></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 26: MULTIMEDIA WORKFLOW -->
+<div class="slide" id="s26">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-4xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="layers" class="w-3 h-3"></i> Section 04 — Workflow</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Complete AI Multimedia Workflow</h2>
+            <p class="text-sm text-zinc-400 font-light mb-8">Create a complete video with AI — from script to final output.</p>
+            <div class="arrow-flow justify-center mb-8">
+                <div class="node text-brand">📝 Script<br><span class="text-[.5rem] text-zinc-500">ChatGPT</span></div>
+                <span class="arrow">→</span>
+                <div class="node text-purple-400">🖼️ Images<br><span class="text-[.5rem] text-zinc-500">DALL·E</span></div>
+                <span class="arrow">→</span>
+                <div class="node text-blue-400">🎙️ Audio<br><span class="text-[.5rem] text-zinc-500">Gemini</span></div>
+                <span class="arrow">→</span>
+                <div class="node text-green-400">🎬 Video<br><span class="text-[.5rem] text-zinc-500">Lumina</span></div>
+                <span class="arrow">→</span>
+                <div class="node text-yellow-400">✅ Final<br><span class="text-[.5rem] text-zinc-500">CapCut</span></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="mini-card">
+                    <h4 class="font-heading font-semibold text-xs mb-2">Example: Product Launch Video</h4>
+                    <div class="space-y-1.5 text-[.65rem] text-zinc-400">
+                        <p><span class="text-brand font-semibold">1.</span> ChatGPT: "Write a 30-second product launch script"</p>
+                        <p><span class="text-purple-400 font-semibold">2.</span> DALL·E: Generate 3-4 key visual frames from script</p>
+                        <p><span class="text-blue-400 font-semibold">3.</span> Gemini: "Narrate this script in energetic professional tone"</p>
+                        <p><span class="text-green-400 font-semibold">4.</span> Lumina: Convert key frames into animated clips</p>
+                        <p><span class="text-yellow-400 font-semibold">5.</span> CapCut: Combine video + audio, add transitions & text</p>
+                    </div>
+                </div>
+                <div class="img-guide" style="height:220px"><img src="https://picsum.photos/seed/video-editing-timeline/600/280.jpg" alt="Editing" class="w-full h-full object-cover"><div class="overlay"></div><div class="badge">Workflow</div><div class="step-label">Combine all AI-generated assets in a video editor</div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 27: PREMIUM OVERVIEW -->
+<div class="slide" id="s27">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="crown" class="w-3 h-3"></i> Section 05 — Premium</div>
+            <h2 class="font-heading text-3xl md:text-5xl font-bold tracking-tight mb-3">Premium AI Models — Worth It?</h2>
+            <p class="text-base text-zinc-400 font-light mb-8 max-w-2xl">What exactly do you get when you pay — and does it matter for you?</p>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="mini-card border-brand/30">
+                    <div class="flex items-center gap-2 mb-3"><div class="w-10 h-10 rounded-xl brand-gradient flex items-center justify-center"><i data-lucide="message-square" class="w-5 h-5"></i></div><div><h4 class="font-heading font-semibold text-sm">ChatGPT Plus</h4><p class="text-[.6rem] text-zinc-500">$20/month</p></div></div>
+                    <ul class="space-y-1.5 text-xs text-zinc-400"><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>GPT-4o unlimited</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>DALL·E unlimited</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Advanced data analysis</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Custom GPTs creation</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Projects & file uploads</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>o1 reasoning model</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Priority access (no queues)</li></ul>
+                </div>
+                <div class="mini-card border-blue-400/30">
+                    <div class="flex items-center gap-2 mb-3"><div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><i data-lucide="sparkles" class="w-5 h-5"></i></div><div><h4 class="font-heading font-semibold text-sm">Gemini Advanced</h4><p class="text-[.6rem] text-zinc-500">$20/month</p></div></div>
+                    <ul class="space-y-1.5 text-xs text-zinc-400"><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Gemini 1.5 Pro (most powerful)</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>1M token context window</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Gemini in Gmail, Docs, Sheets</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Audio generation</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>2TB Google One storage</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Gems (custom assistants)</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Google AI Studio access</li></ul>
+                </div>
+                <div class="mini-card border-purple-400/30">
+                    <div class="flex items-center gap-2 mb-3"><div class="w-10 h-10 rounded-xl purple-gradient flex items-center justify-center"><i data-lucide="shield" class="w-5 h-5"></i></div><div><h4 class="font-heading font-semibold text-sm">Copilot Pro</h4><p class="text-[.6rem] text-zinc-500">$20/month</p></div></div>
+                    <ul class="space-y-1.5 text-xs text-zinc-400"><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>GPT-4o in Copilot</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Copilot in Word, Excel, PPT</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Priority model access</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>DALL·E image generation</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Meeting notes in Teams</li><li class="flex items-start gap-1.5"><span class="text-green-400">✓</span>Microsoft Graph integration</li><li class="flex items-start gap-1.5"><span class="text-yellow-400">~</span>Best if you use M365 daily</li></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 28: FREE VS PREMIUM -->
+<div class="slide" id="s28">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="crown" class="w-3 h-3"></i> Section 05 — Premium</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Free vs Premium — What Changes?</h2>
+            <div class="overflow-x-auto rounded-xl border border-white/10 mb-4">
+                <table class="w-full text-xs">
+                    <thead><tr class="bg-white/[.03]"><th class="text-left p-3 font-heading font-semibold text-zinc-500 uppercase tracking-wider">Capability</th><th class="text-center p-3 font-heading font-semibold text-zinc-400 uppercase tracking-wider">Free</th><th class="text-center p-3 font-heading font-semibold text-brand uppercase tracking-wider">Premium</th></tr></thead>
+                    <tbody class="divide-y divide-white/5">
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Model Quality</td><td class="p-3 text-center text-yellow-400">GPT-4o mini / Gemini Flash</td><td class="p-3 text-center text-green-400">GPT-4o / Gemini Pro (full)</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Response Speed</td><td class="p-3 text-center text-yellow-400">Slower during peak hours</td><td class="p-3 text-center text-green-400">Priority (fastest)</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Image Generation</td><td class="p-3 text-center text-yellow-400">Limited (~2/day ChatGPT)</td><td class="p-3 text-center text-green-400">Unlimited DALL·E 3</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">File Uploads</td><td class="p-3 text-center text-yellow-400">Limited size/count</td><td class="p-3 text-center text-green-400">Larger files, more uploads</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Context Window</td><td class="p-3 text-center text-yellow-400">Reduced</td><td class="p-3 text-center text-green-400">Full (128K-1M tokens)</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Custom GPTs / Gems</td><td class="p-3 text-center text-red-400">✗</td><td class="p-3 text-center text-green-400">✓ Create unlimited</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Projects / Workspaces</td><td class="p-3 text-center text-red-400">✗</td><td class="p-3 text-center text-green-400">✓ Full team sharing</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Advanced Reasoning (o1)</td><td class="p-3 text-center text-red-400">✗</td><td class="p-3 text-center text-green-400">✓</td></tr>
+                        <tr class="comparison-row"><td class="p-3 text-zinc-400">Data Analysis / Code</td><td class="p-3 text-center text-yellow-400">Basic</td><td class="p-3 text-center text-green-400">Advanced (Python, files)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="highlight-box"><p class="text-xs text-zinc-300"><strong class="text-brand">Verdict:</strong> If you use AI daily for work, premium pays for itself in 1 hour of saved time. If casually exploring, free tiers are surprisingly capable.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 29: PREMIUM EXCLUSIVE -->
+<div class="slide" id="s29">
+    <div class="w-full flex flex-col items-center justify-center px-6 py-20">
+        <div class="max-w-5xl w-full slide-enter">
+            <div class="section-tag mb-4"><i data-lucide="crown" class="w-3 h-3"></i> Section 05 — Premium</div>
+            <h2 class="font-heading text-3xl md:text-4xl font-bold tracking-tight mb-6">Premium-Only Features Deep Dive</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="bot" class="w-4 h-4 text-brand"></i>Custom GPTs (ChatGPT Plus)</h4><p class="text-xs text-zinc-500 mb-2">Create your own AI assistant with specific knowledge and capabilities. Share with anyone.</p><div class="prompt-example"><div class="label text-brand">Use Case</div><p class="text-zinc-400 text-[.65rem]">Create a "Legal Document Reviewer" GPT that checks contracts for common issues. Upload your firm's checklist. Share with legal team.</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="brain" class="w-4 h-4 text-purple-400"></i>o1 Reasoning (ChatGPT Plus)</h4><p class="text-xs text-zinc-500 mb-2">A model that "thinks" before answering — dramatically better at math, coding, and logic.</p><div class="prompt-example"><div class="label text-purple-400">Use Case</div><p class="text-zinc-400 text-[.65rem]">"Debug this complex Python algorithm with a race condition. Think through each execution path before suggesting a fix."</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="file-search" class="w-4 h-4 text-blue-400"></i>1M Context (Gemini Advanced)</h4><p class="text-xs text-zinc-500 mb-2">Upload entire books, codebases, or datasets and query them all at once.</p><div class="prompt-example"><div class="label text-blue-400">Use Case</div><p class="text-zinc-400 text-[.65rem]">Upload a 500-page PDF + 3 Excel files. "Analyze all documents and create a summary dashboard of key metrics, trends, and anomalies."</p></div></div>
+                <div class="mini-card"><h4 class="font-heading font-semibold text-sm mb-2 flex items-center gap-1.5"><i data-lucide="table" class="w-4 h-4 text-green-400"></i>Copilot in Excel (Copilot Pro)</h4><p class="text-xs text-zinc-500 mb-2">Ask Copilot to analyze data, create charts, find insights — all inside Excel.</p><div class="prompt-example"><div class="label text-green-400">Use Case</div><p class="text-zinc-400 text-[.65rem]">"Analyze this sales data. Show top 10 products by revenue, create monthly trend chart, highlight declining regions."</p></div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SLIDE 30: THANK YOU -->
+<div class="slide" id="s30">
+    <div class="relative w-full h-full flex items-center justify-center">
+        <div class="absolute inset-0 grid-bg"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full" style="background:radial-gradient(circle,rgba(255,0,110,.08) 0%,transparent 70%)"></div>
+        <div class="relative z-10 text-center px-6 slide-enter max-w-3xl">
+            <div class="w-16 h-16 rounded-2xl brand-gradient flex items-center justify-center mx-auto mb-6 float"><i data-lucide="rocket" class="w-7 h-7 text-white"></i></div>
+            <h2 class="font-heading text-4xl md:text-6xl font-bold tracking-tight mb-4 glow-text">You're Ready!</h2>
+            <p class="text-lg text-zinc-400 font-light mb-8 leading-relaxed">You now have a complete understanding of AI fundamentals, how to use ChatGPT/Gemini/Copilot like a pro, create any type of content, generate images/audio/video, and know exactly what premium gives you.</p>
+            <div class="grid grid-cols-5 gap-2 mb-8">
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="cpu" class="w-4 h-4 text-brand mx-auto mb-1"></i><p class="text-[.5rem] text-zinc-500">AI/ML/NLP</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="message-square" class="w-4 h-4 text-purple-400 mx-auto mb-1"></i><p class="text-[.5rem] text-zinc-500">Assistants</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="wand-2" class="w-4 h-4 text-blue-400 mx-auto mb-1"></i><p class="text-[.5rem] text-zinc-500">Prompts</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="image" class="w-4 h-4 text-green-400 mx-auto mb-1"></i><p class="text-[.5rem] text-zinc-500">Media</p></div>
+                <div class="p-2 rounded-lg bg-white/[.03] border border-white/5 text-center"><i data-lucide="crown" class="w-4 h-4 text-yellow-400 mx-auto mb-1"></i><p class="text-[.5rem] text-zinc-500">Premium</p></div>
+            </div>
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm text-zinc-400 mb-6"><i data-lucide="key" class="w-4 h-4 text-brand"></i> Your next step: Pick ONE tool, use it for 7 days straight</div>
+            <p class="text-xs text-zinc-600">Thank you for attending this workshop! 🎉</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const TOTAL = 31;
+    let current = 0;
+    const dotsContainer = document.getElementById('navDots');
+    const sectionBreaks = [0, 2, 7, 11, 14, 17, 20, 22, 24, 27, 30];
+
+    // Create nav dots
+    sectionBreaks.forEach(i => {
+        const dot = document.createElement('div');
+        dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+        dot.dataset.goto = i;
+        dot.addEventListener('click', () => goTo(i));
+        dotsContainer.appendChild(dot);
+    });
+
+    function goTo(n) {
+        if (n < 0 || n >= TOTAL) return;
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        const target = document.getElementById('s' + n);
+        if (!target) return;
+        target.classList.add('active');
+        // Re-trigger animation
+        const inner = target.querySelector('.slide-enter');
+        if (inner) {
+            inner.style.animation = 'none';
+            inner.offsetHeight;
+            inner.style.animation = '';
+        }
+        target.scrollTop = 0;
+        current = n;
+        updateUI();
+    }
+
+    function nextSlide() { goTo(current + 1); }
+    function prevSlide() { goTo(current - 1); }
+
+    function updateUI() {
+        document.getElementById('slideCounter').textContent = String(current + 1).padStart(2, '0') + ' / ' + String(TOTAL - 1).padStart(2, '0');
+        document.getElementById('progressFill').style.width = ((current / (TOTAL - 1)) * 100) + '%';
+        // Update dots
+        dotsContainer.querySelectorAll('.nav-dot').forEach((dot, i) => {
+            const sectionIdx = sectionBreaks[i];
+            const nextSection = sectionBreaks[i + 1] || TOTAL;
+            dot.classList.toggle('active', current >= sectionIdx && current < nextSection);
+        });
+    }
+
+    function toggleFS() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+            document.exitFullscreen();
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); prevSlide(); }
+        if (e.key === 'f' || e.key === 'F') { toggleFS(); }
+        if (e.key === 'Home') { e.preventDefault(); goTo(0); }
+        if (e.key === 'End') { e.preventDefault(); goTo(TOTAL - 1); }
+    });
+
+    // Touch swipe
+    let touchStartX = 0, touchStartY = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; touchStartY = e.changedTouches[0].screenY; });
+    document.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        const dy = e.changedTouches[0].screenY - touchStartY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 50) {
+            if (dx < 0) nextSlide(); else prevSlide();
+        }
+    });
+
+    // Show toast on load
+    setTimeout(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }, 800);
+
+    // Init Lucide icons
+    lucide.createIcons();
+</script>
+
+</body>
+</html>
